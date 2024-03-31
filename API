@@ -1,0 +1,42 @@
+// User.java (Entity Class)
+import javax.persistence.*;
+
+@Entity
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String name;
+    private String email;
+
+    // Getters and setters
+}
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+    // Custom query methods if needed
+}
+
+// UserService.java (Service Class)
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.List;
+
+@Service
+public class UserService {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    // Other service methods
+}
